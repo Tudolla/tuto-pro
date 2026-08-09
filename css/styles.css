@@ -158,6 +158,53 @@ button {
   letter-spacing: -0.04em;
 }
 
+.brand-avatar {
+  object-fit: cover;
+}
+
+.brand-avatar-wrap {
+  position: relative;
+  display: grid;
+  flex: 0 0 auto;
+}
+
+.brand-avatar-preview {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% + 10px);
+  left: 50%;
+  width: 150px;
+  padding: 5px;
+  visibility: hidden;
+  background: #fff;
+  border: 1px solid rgba(25, 31, 49, 0.1);
+  border-radius: 18px;
+  box-shadow: 0 16px 36px rgba(20, 26, 50, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -5px) scale(0.96);
+  transform-origin: top center;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    visibility 0.2s ease;
+}
+
+.brand-avatar-preview img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 13px;
+}
+
+.brand-avatar-wrap:hover .brand-avatar-preview,
+.brand:focus-visible .brand-avatar-preview {
+  visibility: visible;
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+}
+
 .primary-nav {
   display: flex;
   align-items: center;
