@@ -159,6 +159,7 @@ button {
 }
 
 .brand-avatar {
+  display: block;
   object-fit: cover;
 }
 
@@ -174,6 +175,7 @@ button {
   top: calc(100% + 10px);
   left: 50%;
   width: 150px;
+  aspect-ratio: 1;
   padding: 5px;
   visibility: hidden;
   background: #fff;
@@ -188,21 +190,34 @@ button {
     opacity 0.2s ease,
     transform 0.2s ease,
     visibility 0.2s ease;
+  overflow: hidden;
 }
 
-.brand-avatar-preview img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 1;
-  object-fit: cover;
+.brand-avatar-preview::before {
+  position: absolute;
+  inset: 5px;
+  background: url("../assets/Baldwin.jpg") center / cover no-repeat;
   border-radius: 13px;
+  content: "";
 }
 
-.brand-avatar-wrap:hover .brand-avatar-preview,
+/* Hide the old preview image if Pages briefly serves mismatched cached assets. */
+.brand-avatar-preview img {
+  display: none;
+}
+
 .brand:focus-visible .brand-avatar-preview {
   visibility: visible;
   opacity: 1;
   transform: translate(-50%, 0) scale(1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .brand-avatar-wrap:hover .brand-avatar-preview {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
 }
 
 .primary-nav {
