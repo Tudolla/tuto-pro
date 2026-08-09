@@ -6,7 +6,7 @@ window.portfolioData = {
   profile: {
     name: "Tứ Nguyễn",
     initials: "TV",
-    email: "hello@example.com",
+    email: "eduino.info@gmail.com",
     intro:
       "Tôi xây dựng những ứng dụng mobile hữu ích, có thiết kế tinh gọn và trải nghiệm mượt mà — từ ý tưởng đầu tiên đến sản phẩm hoàn thiện.",
     about:
@@ -29,6 +29,15 @@ window.portfolioData = {
       accent: "#655cf6",
       background: "#eceaff",
       screenBackground: "#f7f6ff",
+      // Thay giá trị `src` rỗng bằng đường dẫn ảnh thật, ví dụ:
+      // src: "assets/screenshots/app-01/home.png"
+      screenshots: [
+        { src: "", alt: "Màn hình giới thiệu ứng dụng" },
+        { src: "", alt: "Màn hình trang chủ" },
+        { src: "", alt: "Màn hình tính năng chính" },
+        { src: "", alt: "Màn hình chi tiết" },
+        { src: "", alt: "Màn hình cài đặt" },
+      ],
     },
     {
       name: "Mobile App 02",

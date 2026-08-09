@@ -48,11 +48,16 @@
   function createAppCard(app, index) {
     const tags = app.tags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
     const icon = iconMap[app.icon] || iconMap.spark;
+    const hasGallery = Array.isArray(app.screenshots) && app.screenshots.length > 0;
+    const interactiveAttributes = hasGallery
+      ? `role="button" tabindex="0" aria-haspopup="dialog" aria-label="Xem ảnh chụp màn hình ${escapeHtml(app.name)}" data-gallery-index="${index}"`
+      : "";
 
     return `
       <article
-        class="app-card reveal"
+        class="app-card reveal${hasGallery ? " app-card--clickable" : ""}"
         style="--card-bg:${escapeHtml(app.background)};--card-accent:${escapeHtml(app.accent)};--screen-bg:${escapeHtml(app.screenBackground)};--status-color:${escapeHtml(app.statusColor)}"
+        ${interactiveAttributes}
       >
         <div class="app-card-content">
           <div class="app-card-top">
@@ -62,6 +67,7 @@
           <h3>${escapeHtml(app.name)}</h3>
           <p>${escapeHtml(app.description)}</p>
           <div class="app-meta">${tags}</div>
+          ${hasGallery ? '<span class="app-card-action">Xem screenshots <i aria-hidden="true">↗</i></span>' : ""}
         </div>
         <div class="app-mockup" aria-hidden="true">
           <div class="mockup-screen">
@@ -79,6 +85,142 @@
     const grid = document.getElementById("app-grid");
     if (!grid) return;
     grid.innerHTML = data.apps.map(createAppCard).join("");
+  }
+
+  function createGalleryModal() {
+    const modal = document.createElement("div");
+    modal.className = "app-modal";
+    modal.hidden = true;
+    modal.innerHTML = `
+      <div class="app-modal-backdrop" data-modal-close></div>
+      <section
+        class="app-modal-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="app-modal-title"
+        aria-describedby="app-modal-description"
+        tabindex="-1"
+      >
+        <header class="app-modal-header">
+          <div>
+            <span class="app-modal-kicker">App showcase</span>
+            <h2 id="app-modal-title"></h2>
+            <p id="app-modal-description">Khám phá các màn hình nổi bật của ứng dụng.</p>
+          </div>
+          <button class="app-modal-close" type="button" aria-label="Đóng cửa sổ" data-modal-close>
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+          </button>
+        </header>
+        <div class="gallery-toolbar">
+          <span class="gallery-count" aria-live="polite"></span>
+          <div class="gallery-controls">
+            <button type="button" aria-label="Xem ảnh trước" data-gallery-prev>←</button>
+            <button type="button" aria-label="Xem ảnh tiếp theo" data-gallery-next>→</button>
+          </div>
+        </div>
+        <div class="screenshot-track" tabindex="0" aria-label="Danh sách ảnh chụp màn hình"></div>
+      </section>`;
+    document.body.append(modal);
+
+    const closeButton = modal.querySelector(".app-modal-close");
+    const title = modal.querySelector("#app-modal-title");
+    const track = modal.querySelector(".screenshot-track");
+    const count = modal.querySelector(".gallery-count");
+    const previousButton = modal.querySelector("[data-gallery-prev]");
+    const nextButton = modal.querySelector("[data-gallery-next]");
+    let lastTrigger = null;
+    let closeTimer = null;
+
+    const createScreenshot = (screenshot, index) => {
+      const alt = screenshot.alt || `Ảnh chụp màn hình ${index + 1}`;
+      const content = screenshot.src
+        ? `<img src="${escapeHtml(screenshot.src)}" alt="${escapeHtml(alt)}" loading="lazy" />`
+        : '<div class="screenshot-placeholder" role="img" aria-label="Khung ảnh đang chờ cập nhật"><span aria-hidden="true"></span></div>';
+
+      return `
+        <figure class="screenshot-item">
+          <div class="screenshot-frame">${content}</div>
+          <figcaption>${String(index + 1).padStart(2, "0")} · ${escapeHtml(alt)}</figcaption>
+        </figure>`;
+    };
+
+    const updateControls = () => {
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      previousButton.disabled = track.scrollLeft <= 4;
+      nextButton.disabled = track.scrollLeft >= maxScroll - 4;
+    };
+
+    const open = (app, trigger) => {
+      clearTimeout(closeTimer);
+      lastTrigger = trigger;
+      title.textContent = app.name;
+      track.innerHTML = app.screenshots.map(createScreenshot).join("");
+      count.textContent = `${String(app.screenshots.length).padStart(2, "0")} screenshots`;
+      track.scrollLeft = 0;
+      modal.hidden = false;
+      document.body.classList.add("modal-open");
+      requestAnimationFrame(() => {
+        modal.classList.add("is-open");
+        closeButton.focus();
+        updateControls();
+      });
+    };
+
+    const close = () => {
+      modal.classList.remove("is-open");
+      document.body.classList.remove("modal-open");
+      closeTimer = window.setTimeout(() => {
+        modal.hidden = true;
+        lastTrigger?.focus();
+      }, 220);
+    };
+
+    const scrollGallery = (direction) => {
+      const item = track.querySelector(".screenshot-item");
+      const distance = item ? item.getBoundingClientRect().width + 22 : 280;
+      track.scrollBy({ left: distance * direction, behavior: "smooth" });
+    };
+
+    document.getElementById("app-grid")?.addEventListener("click", (event) => {
+      const trigger = event.target.closest("[data-gallery-index]");
+      if (!trigger) return;
+      const app = data.apps[Number(trigger.dataset.galleryIndex)];
+      if (app?.screenshots?.length) open(app, trigger);
+    });
+
+    document.getElementById("app-grid")?.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      const trigger = event.target.closest("[data-gallery-index]");
+      if (!trigger) return;
+      event.preventDefault();
+      trigger.click();
+    });
+
+    modal.querySelectorAll("[data-modal-close]").forEach((element) => {
+      element.addEventListener("click", close);
+    });
+    previousButton.addEventListener("click", () => scrollGallery(-1));
+    nextButton.addEventListener("click", () => scrollGallery(1));
+    track.addEventListener("scroll", updateControls, { passive: true });
+
+    modal.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        close();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const focusable = [...modal.querySelectorAll('button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])')];
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
   }
 
   function renderSocials() {
@@ -140,6 +282,7 @@
 
   hydrateProfile();
   renderApps();
+  createGalleryModal();
   renderSocials();
   setupNavigation();
   setupRevealAnimation();

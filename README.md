@@ -22,6 +22,19 @@ Toàn bộ tên, email, link mạng xã hội và danh sách ứng dụng nằm 
 }
 ```
 
+### Thêm screenshot cho modal
+
+App có trường `screenshots` sẽ tự động có thể click để mở gallery. Đặt ảnh vào thư mục `assets/screenshots/` và cập nhật đường dẫn:
+
+```js
+screenshots: [
+  { src: "assets/screenshots/app-01/home.png", alt: "Màn hình trang chủ" },
+  { src: "assets/screenshots/app-01/detail.png", alt: "Màn hình chi tiết" },
+]
+```
+
+Để `src: ""` nếu muốn tiếp tục hiển thị khung mobile màu trắng.
+
 ## Xem website ở máy local
 
 Có thể mở thẳng `index.html`, hoặc chạy một static server trong thư mục project:
