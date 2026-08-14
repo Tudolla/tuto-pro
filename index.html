@@ -39,7 +39,7 @@
             />
             <span class="brand-avatar-preview" aria-hidden="true"></span>
           </span>
-          <span data-profile-name>Tứ Nguyễn</span>
+          <span data-profile-name>Tu Nguyen</span>
         </a>
 
         <button
@@ -209,10 +209,24 @@
             <div class="eyebrow eyebrow--light"><span></span> Let’s connect</div>
             <h2>Có một ý tưởng thú vị?</h2>
             <p>Hãy cùng trò chuyện về sản phẩm, công nghệ hoặc một cơ hội hợp tác.</p>
-            <a class="button button--light" data-email-link href="mailto:eduino.info@gmail.com">
-              <span data-email-text>eduino.info@gmail.com</span>
-              <span class="button-icon" aria-hidden="true">↗</span>
-            </a>
+            <div class="contact-email">
+              <a class="contact-email-link" data-email-link href="mailto:eduino.info@gmail.com">
+                <span data-email-text>eduino.info@gmail.com</span>
+              </a>
+              <button
+                class="copy-email-button"
+                type="button"
+                data-copy-email
+                data-tooltip="Sao chép"
+                aria-label="Sao chép địa chỉ email"
+              >
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="8" y="8" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.8" />
+                  <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                </svg>
+              </button>
+              <span class="sr-only" data-copy-email-status aria-live="polite"></span>
+            </div>
           </div>
         </div>
       </section>
@@ -222,9 +236,9 @@
       <div class="container footer-inner">
         <a class="brand" href="#top">
           <span class="brand-mark" data-brand-mark>TV</span>
-          <span data-profile-name>Tứ Nguyễn</span>
+          <span data-profile-name>Tu Nguyen</span>
         </a>
-        <p>© <span id="current-year"></span> <span data-profile-name>Tứ Nguyễn</span>. Built with care.</p>
+        <p>© <span id="current-year"></span> <span data-profile-name>Tu Nguyen</span>. Built with care.</p>
         <div class="social-links" id="social-links" aria-label="Mạng xã hội"></div>
       </div>
     </footer>

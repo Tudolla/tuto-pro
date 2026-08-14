@@ -174,7 +174,7 @@ button {
   z-index: 10;
   top: calc(100% + 10px);
   left: 50%;
-  width: 150px;
+  width: 188px;
   aspect-ratio: 1;
   padding: 5px;
   visibility: hidden;
@@ -1356,16 +1356,91 @@ h1 {
   color: #aeb3c4;
 }
 
-.button--light {
+.contact-email {
   position: relative;
   z-index: 1;
+  display: inline-flex;
+  min-height: 54px;
+  align-items: center;
   color: var(--dark);
   background: #fff;
+  border-radius: 999px;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
 }
 
-.button--light .button-icon {
+.contact-email-link {
+  display: inline-flex;
+  min-height: 54px;
+  padding: 0 14px 0 23px;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.copy-email-button {
+  position: relative;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  margin-right: 5px;
+  padding: 0;
+  flex: 0 0 auto;
   color: #fff;
   background: var(--primary);
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  place-items: center;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.copy-email-button svg {
+  width: 19px;
+  height: 19px;
+}
+
+.copy-email-button:hover {
+  background: var(--primary-dark);
+  transform: scale(1.06);
+}
+
+.copy-email-button:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.65);
+  outline-offset: 3px;
+}
+
+.copy-email-button::after {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  padding: 5px 9px;
+  color: #fff;
+  background: rgba(11, 16, 32, 0.94);
+  border-radius: 7px;
+  content: attr(data-tooltip);
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  white-space: nowrap;
+}
+
+.copy-email-button:hover::after,
+.copy-email-button:focus-visible::after,
+.copy-email-button.is-copied::after,
+.copy-email-button.has-error::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.copy-email-button.is-copied {
+  background: #24a06b;
+}
+
+.copy-email-button.has-error {
+  background: #c84d5d;
 }
 
 .contact-orb {

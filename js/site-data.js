@@ -4,7 +4,7 @@
  */
 window.portfolioData = {
   profile: {
-    name: "Tứ Nguyễn",
+    name: "Tu Nguyen",
     initials: "TV",
     email: "eduino.info@gmail.com",
     intro:

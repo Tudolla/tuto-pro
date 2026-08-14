@@ -260,6 +260,54 @@
     });
   }
 
+  function copyTextFallback(text) {
+    const input = document.createElement("textarea");
+    input.value = text;
+    input.setAttribute("readonly", "");
+    input.style.position = "fixed";
+    input.style.opacity = "0";
+    document.body.appendChild(input);
+    input.select();
+    const copied = document.execCommand("copy");
+    input.remove();
+    return copied;
+  }
+
+  function setupEmailCopy() {
+    const button = document.querySelector("[data-copy-email]");
+    const status = document.querySelector("[data-copy-email-status]");
+    if (!button) return;
+
+    let resetTimer;
+    button.addEventListener("click", async () => {
+      window.clearTimeout(resetTimer);
+      button.classList.remove("is-copied", "has-error");
+
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(data.profile.email);
+        } else if (!copyTextFallback(data.profile.email)) {
+          throw new Error("Copy command failed");
+        }
+
+        button.classList.add("is-copied");
+        button.dataset.tooltip = "Đã sao chép";
+        button.setAttribute("aria-label", "Đã sao chép địa chỉ email");
+        if (status) status.textContent = `Đã sao chép ${data.profile.email}`;
+      } catch (_error) {
+        button.classList.add("has-error");
+        button.dataset.tooltip = "Không thể sao chép";
+        if (status) status.textContent = "Không thể sao chép địa chỉ email";
+      }
+
+      resetTimer = window.setTimeout(() => {
+        button.classList.remove("is-copied", "has-error");
+        button.dataset.tooltip = "Sao chép";
+        button.setAttribute("aria-label", "Sao chép địa chỉ email");
+      }, 2200);
+    });
+  }
+
   function setupRevealAnimation() {
     const elements = document.querySelectorAll(".reveal");
     if (!("IntersectionObserver" in window)) {
@@ -285,6 +333,7 @@
   createGalleryModal();
   renderSocials();
   setupNavigation();
+  setupEmailCopy();
   setupRevealAnimation();
   document.getElementById("current-year").textContent = new Date().getFullYear();
 })();
