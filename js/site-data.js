@@ -19,7 +19,7 @@ window.portfolioData = {
 
   apps: [
     {
-      name: "Mobile App 01",
+      name: "Học tốt THPT",
       description:
         "Mô tả ngắn về vấn đề ứng dụng giải quyết và giá trị nổi bật mà sản phẩm mang đến cho người dùng.",
       status: "Đang phát triển",
@@ -29,27 +29,30 @@ window.portfolioData = {
       accent: "#655cf6",
       background: "#eceaff",
       screenBackground: "#f7f6ff",
-      // Thay giá trị `src` rỗng bằng đường dẫn ảnh thật, ví dụ:
-      // src: "assets/screenshots/app-01/home.png"
       screenshots: [
-        { src: "", alt: "Màn hình giới thiệu ứng dụng" },
-        { src: "", alt: "Màn hình trang chủ" },
-        { src: "", alt: "Màn hình tính năng chính" },
-        { src: "", alt: "Màn hình chi tiết" },
-        { src: "", alt: "Màn hình cài đặt" },
+        { src: "assets/a1.png", alt: "Màn hình Học tốt THPT 1" },
+        { src: "assets/a2.png", alt: "Màn hình Học tốt THPT 2" },
+        { src: "assets/a3.png", alt: "Màn hình Học tốt THPT 3" },
+        { src: "assets/a4.png", alt: "Màn hình Học tốt THPT 4" },
       ],
     },
     {
-      name: "Mobile App 02",
+      name: "Sức khỏe",
       description:
         "Một sản phẩm mobile được xây dựng với trải nghiệm đơn giản, tốc độ nhanh và sự chỉn chu trong từng chi tiết.",
-      status: "Đang phát triển",
+      status: "Đang trên store",
       statusColor: "#34b987",
       tags: ["Mobile", "Productivity", "Beta"],
       icon: "layers",
       accent: "#18a5bd",
       background: "#e4f5f7",
       screenBackground: "#f1fbfc",
+      screenshots: [
+        { src: "assets/h1.jpg", alt: "Màn hình Sức khỏe 1" },
+        { src: "assets/h2.jpg", alt: "Màn hình Sức khỏe 2" },
+        { src: "assets/h3.jpg", alt: "Màn hình Sức khỏe 3" },
+        { src: "assets/h4.jpg", alt: "Màn hình Sức khỏe 4" },
+      ],
     },
     {
       name: "Mobile App 03",
