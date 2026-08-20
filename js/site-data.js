@@ -22,13 +22,14 @@ window.portfolioData = {
       name: "Học tốt THPT",
       description:
         "Mô tả ngắn về vấn đề ứng dụng giải quyết và giá trị nổi bật mà sản phẩm mang đến cho người dùng.",
-      status: "Đang phát triển",
+      status: "Đang trên Store",
       statusColor: "#f59e42",
       tags: ["Flutter", "iOS & Android", "Coming soon"],
       icon: "spark",
       accent: "#655cf6",
       background: "#eceaff",
       screenBackground: "#f7f6ff",
+      storeUrl: "https://play.google.com/store/apps/details?id=com.eduino.study.hha",
       screenshots: [
         { src: "assets/a1.png", alt: "Màn hình Học tốt THPT 1" },
         { src: "assets/a2.png", alt: "Màn hình Học tốt THPT 2" },
@@ -40,13 +41,14 @@ window.portfolioData = {
       name: "Sức khỏe",
       description:
         "Một sản phẩm mobile được xây dựng với trải nghiệm đơn giản, tốc độ nhanh và sự chỉn chu trong từng chi tiết.",
-      status: "Đang trên store",
+      status: "Đang trên Store",
       statusColor: "#34b987",
       tags: ["Mobile", "Productivity", "Beta"],
       icon: "layers",
       accent: "#18a5bd",
       background: "#e4f5f7",
       screenBackground: "#f1fbfc",
+      storeUrl: "https://play.google.com/store/apps/details?id=com.eduino.health.firstaid",
       screenshots: [
         { src: "assets/h1.jpg", alt: "Màn hình Sức khỏe 1" },
         { src: "assets/h2.jpg", alt: "Màn hình Sức khỏe 2" },

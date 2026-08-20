@@ -19,6 +19,7 @@ Toàn bộ tên, email, link mạng xã hội và danh sách ứng dụng nằm 
   accent: "#655cf6",
   background: "#eceaff",
   screenBackground: "#f7f6ff",
+  storeUrl: "https://play.google.com/store/apps/details?id=APP_ID",
 }
 ```
 
@@ -34,6 +35,8 @@ screenshots: [
 ```
 
 Để `src: ""` nếu muốn tiếp tục hiển thị khung mobile màu trắng.
+
+Người xem có thể click từng screenshot trong gallery để mở ảnh lớn. Trường `storeUrl` sẽ tạo nút Google Play ở cả card ứng dụng và gallery.
 
 ## Xem website ở máy local
 
